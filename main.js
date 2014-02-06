@@ -14,7 +14,7 @@ Versión:            1.0
 var Scribd={
 		script:'services.php',
 		place:'lugar',
-		colecciones:function(script, place){
+		docs:function(script, place){
 			this.script = (script)?script:this.script;
 			this.place = (place)?place:this.place;
 			
@@ -26,7 +26,7 @@ var Scribd={
 			onSuccess: function(responseText, responseXML) {  
 				$('xmlDOM').set('html',responseText);
 				if($('xmlDOM').getElement('rsp').get('stat')=='ok'){
-					Scribd.colecciones_callback();
+					Scribd.docs_callback();
 				}else{
 					obj.empty();
 					obj.set('text', 'Loading...');
@@ -34,24 +34,10 @@ var Scribd={
 			}
 			}).send('collections=true');
 		},
-		colecciones_callback:function(){},
-		coleccion:function(id){
-			if(id)
-			var myRequest = new Request({
-			url: this.script,
-			method: 'post',
-			onSuccess: function(responseText, responseXML) {  
-				$('xmlDOM').set('html',responseText);
-				if($('xmlDOM').getElement('rsp').get('stat')=='ok'){
-					Scribd.coleccion_callback();
-				}else{
-					obj.empty();
-					obj.set('text', 'Loading...');
-				}
-			}
-			}).send('collection_id='+id);
-		},
-		coleccion_callback:function(){}
+		docs_callback:function(){},
+		setThumbs:function(id){
+			$('lugar2').src = ($('doc_'+id).get('pic'));
+		}
 };
 
 

@@ -6,27 +6,21 @@
     <script src="main.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">	
 	window.addEvent('domready',function(){
-		Scribd.colecciones();
-		Scribd.colecciones_callback=function(){
+		Scribd.docs();
+		Scribd.docs_callback=function(){
 			 var sd = $('xmlDOM').getElement('resultset');
-			 var sel1 = new Element('select',{'onchange':'Scribd.coleccion(this.value);'}).grab(new Element('option'));
+			 var sel1 = new Element('select',{'onchange':'Scribd.setThumbs(this.value);'}).grab(new Element('option'));
 			sd.getElements('result').each(function(row){
-				sel1.grab(new Element('option',{
-					'value':row.getElement('collection_id').get('text'),
-					'html':row.getElement('collection_name').get('text')+' ('+row.getElement('doc_count').get('text')+')'
+				sel1.grab(new Element('option#doc_'+row.getElement('doc_id').get('text'),{
+					'value':row.getElement('doc_id').get('text'),
+					'pic':row.getElement('thumbnail_url').get('text'),
+					'html':row.getElement('title').get('text')
 				}));
+				
 			});
-		//sel1.set('value',4439827); //set del valor
+		sel1.set('value',204970061); //set del valor
 		$('lugar').grab(sel1);
 		}	
-		
-		Scribd.coleccion_callback=function(){
-			 var sd = $('xmlDOM').getElement('resultset');
-			 sd.getElements('result').each(function(row){
-				$('lugar2').grab(new Element('img',{'src':row.getElement('thumbnail_url').get('text')}));
-			});
-		}	
-			
 	});
     </script>
     <style type="text/css">
@@ -37,8 +31,8 @@
     <title>Scribd</title>
 </head>
 <body>
-	<div id="lugar">---</div>
-    <div id="lugar2">---</div>
+	<div id="lugar">&nbsp;</div>
+    <div><img src="" id="lugar2" height="170px"/></div>
     <div id="xmlDOM">&nbsp;</div>
 </body>
 </html>
