@@ -9,15 +9,16 @@ Historial:          ==========================================================
 					HansPHP						Creación            05/02/2014
 Descripción:        Se creó el objeto.
 					==========================================================
-Versión:            1.0                    
+Versión:            1.0
 *******************************************************************************/
 var Scribd={
 		script:'services.php',
 		place:'lugar',
-		docs:function(script, place){
+		doc_place:'lugar2',
+		docs:function(script, place, doc_place){
 			this.script = (script)?script:this.script;
 			this.place = (place)?place:this.place;
-			
+			this.doc_place = (doc_place)?doc_place:this.doc_place;
 			var obj = $(this.place);
 			
 			var myRequest = new Request({
@@ -36,8 +37,11 @@ var Scribd={
 		},
 		docs_callback:function(){},
 		setThumbs:function(id){
-			$('lugar2').src = ($('doc_'+id).get('pic'));
+			$(this.doc_place).src = ($('doc_'+id).getElement('thumbnail_url').get('text'));
+			$('doc_page_count').set('html','<b>'+$('doc_'+id).getElement('page_count').get('text')+'</b> páginas');
+			$('doc_title').set('text', $('doc_'+id).getElement('title').get('text'));
+			$('doc_reads').set('html',' visto <b>'+$('doc_'+id).getElement('reads').get('text')+'</b> veces');
+			$('doc_when_updated').set('html','Última actualización: <b>'+$('doc_'+id).getElement('when_updated').get('text').substr(0,10)+'</b>');
+			$('doc_when_uploaded').set('html','Subido el día: <b>'+$('doc_'+id).getElement('when_uploaded').get('text').substr(0,10)+'</b>');
 		}
 };
-
-
